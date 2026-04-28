@@ -283,6 +283,12 @@ export function useGameSocket() {
         if (!playerId) {
           return;
         }
+        // Skip echoes of our own submissions — in production the server round-trip
+        // (~100-300ms) means the echo arrives after the user has typed more,
+        // which would overwrite newer local state with stale server data.
+        if (playerId === useGameStore.getState().currentUserId) {
+          return;
+        }
         updatePlayerInputs(playerId, fromApiAnswers(payload?.answers ?? {}));
       }),
       bindEventAliases(socket, [...INCOMING_EVENTS.PRESS_STOP, ...INCOMING_EVENTS.ROUND_STOPPED], (payload) => {
