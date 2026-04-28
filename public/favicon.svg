@@ -1,19 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#7c3aed" />
-      <stop offset="100%" stop-color="#22c55e" />
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="14" fill="url(#bg)" />
-  <text
-    x="50%"
-    y="56%"
-    text-anchor="middle"
-    dominant-baseline="middle"
-    font-family="Inter, system-ui, sans-serif"
-    font-weight="800"
-    font-size="32"
-    fill="#fff"
-  >N</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+
+  <!-- Dark background -->
+  <rect width="32" height="32" rx="6" fill="#0f0a1e"/>
+
+  <!-- Top row: N (Name) and A (Animal) — two wider tiles -->
+
+  <!-- N · Name · purple -->
+  <rect x="2" y="2" width="13" height="13" rx="2.5" fill="#7c3aed"/>
+  <text x="8.5" y="8.5"
+    font-family="system-ui,-apple-system,Arial Black,sans-serif"
+    font-size="8" font-weight="900" fill="white"
+    text-anchor="middle" dominant-baseline="central">N</text>
+
+  <!-- A · Animal · cyan -->
+  <rect x="17" y="2" width="13" height="13" rx="2.5" fill="#0891b2"/>
+  <text x="23.5" y="8.5"
+    font-family="system-ui,-apple-system,Arial Black,sans-serif"
+    font-size="8" font-weight="900" fill="white"
+    text-anchor="middle" dominant-baseline="central">A</text>
+
+  <!-- Bottom row: P (Plant), O (Object), C (City) — three narrower tiles -->
+
+  <!-- P · Plant · green -->
+  <rect x="2" y="17" width="8" height="13" rx="2" fill="#059669"/>
+  <text x="6" y="23.5"
+    font-family="system-ui,-apple-system,Arial Black,sans-serif"
+    font-size="7" font-weight="900" fill="white"
+    text-anchor="middle" dominant-baseline="central">P</text>
+
+  <!-- O · Object · amber -->
+  <rect x="12" y="17" width="8" height="13" rx="2" fill="#d97706"/>
+  <text x="16" y="23.5"
+    font-family="system-ui,-apple-system,Arial Black,sans-serif"
+    font-size="7" font-weight="900" fill="white"
+    text-anchor="middle" dominant-baseline="central">O</text>
+
+  <!-- C · City · red -->
+  <rect x="22" y="17" width="8" height="13" rx="2" fill="#dc2626"/>
+  <text x="26" y="23.5"
+    font-family="system-ui,-apple-system,Arial Black,sans-serif"
+    font-size="7" font-weight="900" fill="white"
+    text-anchor="middle" dominant-baseline="central">C</text>
+
 </svg>
