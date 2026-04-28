@@ -850,6 +850,15 @@ export function GameRoomPage() {
     }
   }, [game.state, game.selectorPlayerId, currentUserId]);
 
+  // Auto-close the letter picker 2 seconds before the server's 30s timeout fires.
+  // Without this, the modal stays open after the server auto-picks, and a late click
+  // sends a pick the server silently rejects while showing the wrong letter locally.
+  useEffect(() => {
+    if (!selectorModalOpen) return;
+    const id = setTimeout(() => setSelectorModalOpen(false), 28000);
+    return () => clearTimeout(id);
+  }, [selectorModalOpen]);
+
   useEffect(() => {
     if (
       [GAME_STATES.STOPPED, GAME_STATES.SCORING, GAME_STATES.FINISHED].includes(
