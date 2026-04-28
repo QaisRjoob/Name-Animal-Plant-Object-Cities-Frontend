@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root,
+  html.dark {
+    /* Dark theme (default) — party-game vibe */
+    --color-surface: 11 16 32;
+    --color-card: 18 26 51;
+    --color-border: 51 65 85;
+    --color-muted: 30 41 59;
+    --color-foreground: 229 231 235;
+    --color-subtle: 148 163 184;
+    --color-accent: 124 58 237;
+    --color-accent-hover: 139 92 246;
+    --color-good: 34 197 94;
+    --color-warn: 245 158 11;
+    --color-danger: 239 68 68;
+    --color-danger-hover: 248 113 113;
+  }
+
+  html.light {
+    --color-surface: 248 250 252;
+    --color-card: 255 255 255;
+    --color-border: 226 232 240;
+    --color-muted: 241 245 249;
+    --color-foreground: 15 23 42;
+    --color-subtle: 71 85 105;
+    --color-accent: 109 40 217;
+    --color-accent-hover: 124 58 237;
+    --color-good: 22 163 74;
+    --color-warn: 217 119 6;
+    --color-danger: 220 38 38;
+    --color-danger-hover: 239 68 68;
+  }
+
+  :root {
+    font-family:
+      Inter,
+      system-ui,
+      -apple-system,
+      Segoe UI,
+      Roboto,
+      Helvetica,
+      Arial,
+      "Noto Sans Arabic",
+      sans-serif;
+    color: rgb(var(--color-foreground));
+    background-color: rgb(var(--color-surface));
+  }
+
+  * {
+    @apply box-border;
+  }
+
+  body {
+    @apply m-0 min-h-screen text-foreground antialiased;
+    background-color: rgb(var(--color-surface));
+    background-image: radial-gradient(
+      circle at 20% -10%,
+      rgb(var(--color-accent) / 0.18),
+      transparent 55%
+    ), radial-gradient(circle at 80% 110%, rgb(var(--color-accent) / 0.12), transparent 55%);
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  html.light body {
+    background-image: radial-gradient(
+      circle at 20% -10%,
+      rgb(var(--color-accent) / 0.12),
+      transparent 55%
+    ), radial-gradient(circle at 80% 110%, rgb(var(--color-accent) / 0.08), transparent 55%);
+  }
+
+  input,
+  select,
+  button,
+  textarea {
+    font: inherit;
+  }
+
+  /* RTL refinements */
+  [dir="rtl"] {
+    font-family: "Noto Sans Arabic", "Segoe UI", Inter, system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .game-card {
+    @apply rounded-xl border border-border bg-card p-4 shadow-lg shadow-black/20 transition-colors;
+  }
+  html.light .game-card {
+    @apply shadow-slate-300/50;
+  }
+
+  .game-input {
+    @apply w-full rounded-lg border border-border bg-muted px-3 py-2 text-sm text-foreground placeholder:text-subtle focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/40 disabled:cursor-not-allowed disabled:opacity-60 transition;
+  }
+
+  .game-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 active:scale-[0.98];
+  }
+
+  .game-btn-primary {
+    @apply game-btn bg-accent text-white shadow-md shadow-accent/30 hover:bg-accent-hover;
+  }
+
+  .game-btn-secondary {
+    @apply game-btn border border-border bg-card text-foreground hover:bg-muted;
+  }
+
+  .game-btn-danger {
+    @apply game-btn bg-danger text-white shadow-md shadow-danger/30 hover:bg-danger-hover;
+  }
+
+  .game-btn-ghost {
+    @apply game-btn text-foreground hover:bg-muted;
+  }
+
+  .subtle-text {
+    @apply text-subtle;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground;
+  }
+
+  .chip-accent {
+    @apply chip border-accent/50 bg-accent/15 text-accent;
+  }
+  html.dark .chip-accent {
+    @apply text-violet-200;
+  }
+}
+
+/* ── Auth page background ────────────────────────────────────────────────── */
+.auth-bg {
+  background-color: #f4f7ff;
+  background-image:
+    linear-gradient(rgba(147,197,253,0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(147,197,253,0.35) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+html.dark .auth-bg {
+  background-color: #0b1020;
+  background-image:
+    linear-gradient(rgba(99,102,241,0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+html.dark .auth-card {
+  background: rgba(18,26,51,0.95) !important;
+  border-color: rgba(124,58,237,0.3) !important;
+}
+html.dark .auth-card .tab-inactive {
+  color: #94a3b8 !important;
+  border-color: #1e293b !important;
+}
+html.dark .auth-card .auth-local-btn {
+  border-color: #334155 !important;
+  color: #64748b !important;
+}
+
+/* ── Auth page decorative animations ─────────────────────────────────────── */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-12px) rotate(3deg); }
+  66%       { transform: translateY(-6px) rotate(-2deg); }
+}
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-18px) rotate(-4deg); }
+}
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  40%       { transform: translateY(-8px) rotate(5deg); }
+  80%       { transform: translateY(-14px) rotate(-3deg); }
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(-6deg); }
+  50%       { transform: rotate(6deg); }
+}
+
+/* ── Round transition animation ──────────────────────────────────────────── */
+@keyframes round-label-in {
+  0%   { transform: translateX(-32px); opacity: 0; }
+  100% { transform: translateX(0);     opacity: 1; }
+}
+@keyframes round-number-pop {
+  0%   { transform: scale(0.4) translateY(24px); opacity: 0; }
+  55%  { transform: scale(1.1) translateY(-6px);  opacity: 1; }
+  100% { transform: scale(1)   translateY(0);     opacity: 1; }
+}
+@keyframes round-ring-pulse {
+  0%   { transform: scale(0.8); opacity: 0.5; }
+  100% { transform: scale(2.4); opacity: 0;   }
+}
+
+/* ── Game countdown animation ─────────────────────────────────────────────── */
+@keyframes countdown-pop {
+  0%   { transform: scale(0.2) rotate(-8deg); opacity: 0; }
+  25%  { transform: scale(1.12) rotate(2deg); opacity: 1; }
+  60%  { transform: scale(1) rotate(0deg);   opacity: 1; }
+  85%  { transform: scale(1.04);             opacity: 1; }
+  100% { transform: scale(1.25);             opacity: 0; }
+}
+@keyframes countdown-go {
+  0%   { transform: scale(0.4); opacity: 0; }
+  40%  { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+@keyframes countdown-ring {
+  0%   { transform: scale(0.6); opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--color-border));
+    border-radius: 9999px;
+  }
+}
+
+/* ── Mobile responsive overrides (< 640px) ───────────────────────────────── */
+@media (max-width: 639px) {
+  /* Ensure all buttons meet 44px minimum touch target */
+  .game-btn {
+    min-height: 44px;
+  }
+
+  /* Tighter card padding on small screens */
+  .game-card {
+    @apply p-3;
+  }
+
+  /* Allow modals to use full screen height on mobile */
+  .modal-fullscreen-mobile {
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+}
