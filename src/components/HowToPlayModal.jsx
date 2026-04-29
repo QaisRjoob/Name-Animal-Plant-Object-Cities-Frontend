@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { useTranslation } from "../i18n";
+import en from "../i18n/en";
+import ar from "../i18n/ar";
 
 const CATEGORY_COLORS = ["#7c3aed", "#0891b2", "#059669", "#d97706", "#dc2626"];
 const CATEGORY_LABELS_EN = ["Name", "Animal", "Plant", "Object", "City"];
 const CATEGORY_LABELS_AR = ["اسم", "حيوان", "نبات", "جماد", "بلاد"];
 
 export function HowToPlayModal({ onClose }) {
-  const { t, language } = useTranslation();
+  const { language } = useTranslation();
   const isArabic = language === "ar";
-  const htp = t("howToPlay");
+  // t() only resolves string leaves; access the dict directly for objects/arrays
+  const htp = (isArabic ? ar : en).howToPlay;
   const sections = htp.sections ?? [];
   const categoryLabels = isArabic ? CATEGORY_LABELS_AR : CATEGORY_LABELS_EN;
 
