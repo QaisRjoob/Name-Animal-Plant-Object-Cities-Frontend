@@ -745,6 +745,9 @@ export function GameRoomPage() {
   const prevVotingActiveRef = useRef(voting?.active ?? false);
   const selectorCountdownFiredRef = useRef(false);
   const saveTimer = useRef();
+  const clientTimerRef = useRef(null);
+  const lastServerTimerUpdateRef = useRef(0);
+  const [clientTimerDisplay, setClientTimerDisplay] = useState(null);
 
 
   // ── Other effects (unchanged) ──────────────────────────────────────────────────
@@ -897,6 +900,35 @@ export function GameRoomPage() {
     setDraftAnswers(createEmptyAnswerRow());
   }, [game.roundNumber, game.state, currentUserId]);
 
+  // Sync client-side timer from server updates; also reset when leaving PLAYING.
+  useEffect(() => {
+    if (game.state === GAME_STATES.PLAYING && game.timerSeconds != null) {
+      clientTimerRef.current = game.timerSeconds;
+      lastServerTimerUpdateRef.current = Date.now();
+      setClientTimerDisplay(game.timerSeconds);
+    } else if (game.state !== GAME_STATES.PLAYING) {
+      clientTimerRef.current = null;
+      setClientTimerDisplay(null);
+    }
+  }, [game.timerSeconds, game.state]);
+
+  // Local fallback: tick down every second only when server updates have stopped
+  // arriving (> 1.5 s gap). Covers Render CPU throttling or network hiccups.
+  useEffect(() => {
+    if (game.state !== GAME_STATES.PLAYING) return;
+    const id = setInterval(() => {
+      if (
+        Date.now() - lastServerTimerUpdateRef.current > 1500 &&
+        clientTimerRef.current !== null &&
+        clientTimerRef.current > 0
+      ) {
+        clientTimerRef.current -= 1;
+        setClientTimerDisplay(clientTimerRef.current);
+      }
+    }, 1000);
+    return () => clearInterval(id);
+  }, [game.state]);
+
   // ── Derived values ────────────────────────────────────────────────────────────
   const players    = room.players ?? [];
   const isOwner    = !!room.ownerId && room.ownerId === currentUserId;
@@ -907,11 +939,11 @@ export function GameRoomPage() {
   const showStopButton =
     game.state === GAME_STATES.SELECTING_LETTER ||
     game.state === GAME_STATES.PLAYING;
-  const visibleTimerSeconds = Number(
-    game.timerSeconds ?? room.settings?.timeLimitSeconds ?? 0
-  );
-
   const timeLimitSeconds  = room.settings?.timeLimitSeconds || 60;
+  const visibleTimerSeconds =
+    game.state === GAME_STATES.PLAYING && clientTimerDisplay !== null
+      ? clientTimerDisplay
+      : Number(game.timerSeconds ?? timeLimitSeconds ?? 0);
   const roundSecondsLeft  = Number(game.timerSeconds ?? timeLimitSeconds);
   const roundTimedOut     = game.state === GAME_STATES.PLAYING && roundSecondsLeft <= 0;
 
