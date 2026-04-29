@@ -3,7 +3,8 @@
 A real-time multiplayer word game where players fill in categories (Name, Animal, Plant, Object, City) starting with a chosen letter — all before the timer runs out.
 
 **Live demo: https://name-animal-plant-object-cities.onrender.com
-**Backend repo:https://name-animal-plant-object-cities-game.onrender.com
+**Server link: https://name-animal-plant-object-cities-game.onrender.com
+**Backend repo:https://github.com/QaisRjoob/Name-Animal-Plant-Object-Cities-BackEnd.git
 ---
 
 ## Features
