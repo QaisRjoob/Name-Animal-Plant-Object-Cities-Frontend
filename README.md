@@ -6,7 +6,7 @@ A real-time multiplayer word game where players fill in categories (Name, Animal
 
 **Server link: https://name-animal-plant-object-cities-game.onrender.com
 
-**Backend repo:https: //github.com/QaisRjoob/Name-Animal-Plant-Object-Cities-BackEnd.git
+**Backend repo: https://github.com/QaisRjoob/Name-Animal-Plant-Object-Cities-BackEnd.git
 ---
 
 ## Features
