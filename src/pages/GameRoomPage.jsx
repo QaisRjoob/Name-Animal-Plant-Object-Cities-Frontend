@@ -831,7 +831,8 @@ export function GameRoomPage() {
     game.state === GAME_STATES.SELECTING_LETTER &&
     !!game.selectorPlayerId &&
     game.selectorPlayerId === currentUserId &&
-    lastPopupTurn !== currentTurnKey;
+    lastPopupTurn !== currentTurnKey &&
+    (room.settings?.letterMode ?? LETTER_MODES.BOTH) !== LETTER_MODES.RANDOM_ONLY;
 
   useEffect(() => {
     if (!shouldTriggerLetterModal) {
@@ -996,7 +997,8 @@ export function GameRoomPage() {
     selectorModalOpen &&
     game.state === GAME_STATES.SELECTING_LETTER &&
     !!game.selectorPlayerId &&
-    game.selectorPlayerId === currentUserId;
+    game.selectorPlayerId === currentUserId &&
+    (room.settings?.letterMode ?? LETTER_MODES.BOTH) !== LETTER_MODES.RANDOM_ONLY;
 
   // ── Handlers ─────────────────────────────────────────────────────────────────
   const updateMyInput = (category, value) => {
