@@ -1,13 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 import { useGameStore } from "../store/gameStore";
 import { ConnectionBanner } from "../components/ConnectionBanner";
+import { HowToPlayModal } from "../components/HowToPlayModal";
 import { AuthPage } from "../pages/AuthPage";
 import { LobbyPage } from "../pages/LobbyPage";
 import { WaitingRoomPage } from "../pages/WaitingRoomPage";
 import { GameRoomPage } from "../pages/GameRoomPage";
 import { ResultsPage } from "../pages/ResultsPage";
+import { useTranslation } from "../i18n";
 
 function ProtectedRoute({ children }) {
   const token = useAuthStore((state) => state.token);
@@ -28,6 +30,8 @@ function PublicOnlyRoute({ children }) {
 export function AppRouter() {
   const authUserId = useAuthStore((state) => state.user?.id ?? "");
   const setCurrentUserId = useGameStore((state) => state.setCurrentUserId);
+  const [showHowToPlay, setShowHowToPlay] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (authUserId) {
@@ -89,6 +93,20 @@ export function AppRouter() {
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
+      {/* Floating "How to Play" button — always visible */}
+      <button
+        onClick={() => setShowHowToPlay(true)}
+        title={t("howToPlay.button")}
+        className="fixed bottom-5 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white shadow-lg transition hover:bg-accent-hover hover:scale-110 active:scale-95 text-xl font-black"
+        aria-label={t("howToPlay.button")}
+      >
+        ?
+      </button>
+
+      {showHowToPlay && (
+        <HowToPlayModal onClose={() => setShowHowToPlay(false)} />
+      )}
     </div>
   );
 }

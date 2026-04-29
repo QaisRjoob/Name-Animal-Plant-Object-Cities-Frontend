@@ -168,5 +168,43 @@ export default {
     language: "Language",
     toggleTheme: "Toggle theme",
     toggleLanguage: "Switch language"
+  },
+  howToPlay: {
+    button: "How to Play",
+    title: "How to Play",
+    subtitle: "Name · Animal · Plant · Object · City",
+    close: "Got it!",
+    sections: [
+      {
+        icon: "🎯",
+        heading: "Objective",
+        body: "Each round a letter is revealed. Write one word starting with that letter for each of the 5 categories: Name, Animal, Plant, Object, and City — before time runs out!"
+      },
+      {
+        icon: "🔤",
+        heading: "Letter Selection",
+        body: "Depending on the room settings, a designated player picks the letter manually, it is chosen randomly, or both options are available. If the selector doesn't choose within 30 seconds, a letter is picked automatically."
+      },
+      {
+        icon: "🛑",
+        heading: "STOP",
+        body: "Any player can press STOP once they've finished all their answers (the button unlocks after 5 seconds). Everyone gets a 2-second grace period to finalise, then inputs are locked."
+      },
+      {
+        icon: "🏆",
+        heading: "Scoring",
+        body: "Unique correct answer: 10 pts · Duplicate answer (same as another player): 5 pts · Empty or invalid answer: 0 pts."
+      },
+      {
+        icon: "🗳️",
+        heading: "Voting",
+        body: "After each round anyone can challenge an answer by clicking it in the results table. All players vote — the majority decides whether it counts."
+      },
+      {
+        icon: "👑",
+        heading: "Winning",
+        body: "The player with the most points after all rounds wins. Good luck!"
+      }
+    ]
   }
 };
