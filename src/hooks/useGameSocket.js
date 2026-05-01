@@ -159,9 +159,18 @@ export function useGameSocket() {
       }),
       bindEventAliases(socket, INCOMING_EVENTS.PLAYER_LEFT, (payload) => {
         const playerId = payload?.userId ?? payload?.playerId ?? payload?.id;
-        if (playerId) {
+        if (!playerId) return;
+        if (payload?.temporary) {
+          // Keep them in the list but mark as disconnected — they have 30s to reconnect
+          upsertPlayers([{ id: playerId, username: payload.username, disconnected: true }]);
+        } else {
           removePlayer(playerId);
         }
+      }),
+      bindEventAliases(socket, INCOMING_EVENTS.PLAYER_RECONNECTED, (payload) => {
+        const playerId = payload?.userId ?? payload?.playerId ?? payload?.id;
+        if (!playerId) return;
+        upsertPlayers([{ id: playerId, username: payload.username, disconnected: false }]);
       }),
       bindEventAliases(socket, INCOMING_EVENTS.OWNER_CHANGED, (payload) => {
         if (payload?.newOwnerId) {

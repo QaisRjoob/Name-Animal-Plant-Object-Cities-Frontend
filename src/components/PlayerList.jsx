@@ -15,13 +15,17 @@ export function PlayerList({ players, ownerId, selectorPlayerId, stopPressedBy, 
         const isStopper = player.id === stopPressedBy;
         const isCurrent = player.id === currentUserId;
 
+        const isDisconnected = !!player.disconnected;
+
         const base =
           "inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs transition";
         const tone = isSelector
           ? "border-accent bg-accent/20 text-foreground animate-pulse-ring"
           : isStopper
             ? "border-danger/60 bg-danger/15 text-danger"
-            : "border-border bg-muted text-foreground";
+            : isDisconnected
+              ? "border-border/40 bg-muted/30 text-foreground/40 opacity-60"
+              : "border-border bg-muted text-foreground";
 
         return (
           <li key={player.id} className={`${base} ${tone}`}>
@@ -48,6 +52,9 @@ export function PlayerList({ players, ownerId, selectorPlayerId, stopPressedBy, 
               <span className="rounded bg-danger/30 px-1.5 py-0.5 text-[10px] font-bold text-danger">
                 {t("badges.stop")}
               </span>
+            ) : null}
+            {isDisconnected ? (
+              <span className="text-[11px]" title="Reconnecting...">⏳</span>
             ) : null}
           </li>
         );
