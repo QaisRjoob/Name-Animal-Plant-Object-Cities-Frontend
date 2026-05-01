@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useAuthStore } from "../store/authStore";
 import { useGameStore } from "../store/gameStore";
 import { useTranslation } from "../i18n";
@@ -6,10 +7,21 @@ export function ConnectionBanner() {
   const token = useAuthStore((state) => state.token);
   const connection = useGameStore((state) => state.connection);
   const { t } = useTranslation();
+  const [visible, setVisible] = useState(false);
 
-  if (!token || (connection.connected && !connection.error)) {
-    return null;
-  }
+  const isOk = !token || (connection.connected && !connection.error);
+
+  useEffect(() => {
+    if (isOk) {
+      setVisible(false);
+      return;
+    }
+    // Wait 2s before showing \u2014 hides the normal startup flash and brief blips
+    const id = setTimeout(() => setVisible(true), 2000);
+    return () => clearTimeout(id);
+  }, [isOk]);
+
+  if (!visible) return null;
 
   const message = connection.reconnecting
     ? t("connection.reconnecting")
